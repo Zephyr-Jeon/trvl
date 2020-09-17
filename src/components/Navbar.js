@@ -6,6 +6,7 @@ import './Navbar.css';
 function Navbar() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
+  const [scroll, setScroll] = useState(false);
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
@@ -19,16 +20,22 @@ function Navbar() {
     }
   };
 
+  const handleScroll = () => {
+    console.log(window.scrollY);
+    window.scrollY ? setScroll(true) : setScroll(false);
+  };
+
   useEffect(() => {
     console.log('effect works');
     showButton();
   }, []);
 
   window.addEventListener('resize', showButton);
+  window.addEventListener('scroll', handleScroll);
 
   return (
     <>
-      <nav className="navbar">
+      <nav className={scroll ? 'navbar active' : 'navbar'}>
         <div className="navbar-container">
           <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
             TRVL <i className="fab fa-typo3" />
